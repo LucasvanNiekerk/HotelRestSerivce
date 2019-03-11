@@ -11,6 +11,7 @@ namespace RestConsumer
     class Worker
     {
         private const string URI = "http://localhost:2265/api/Facility";
+        private HttpClient client = Utils.Client();
 
         public void Start()
         {
@@ -88,108 +89,60 @@ namespace RestConsumer
 
         private List<Facility> GetAllFacilities()
         {
-            List<Facility> facilities = new List<Facility>();
+            Task<string> resTask = client.GetStringAsync(URI);
 
-            using (HttpClient client = new HttpClient())
-            {
-                Task<string> resTask = client.GetStringAsync(URI);
-                String jsonStr = resTask.Result;
-
-                facilities = JsonConvert.DeserializeObject<List<Facility>>(jsonStr);
-            }
-
-            return facilities;
+            return JsonConvert.DeserializeObject<List<Facility>>(resTask.Result);
         }
 
         private Facility GetOneFacility(int id)
         {
-            Facility facility = new Facility();
+            Task<string> resTask = client.GetStringAsync(URI + "/" + id);
 
-            using (HttpClient client = new HttpClient())
-            {
-                Task<string> resTask = client.GetStringAsync(URI + "/" + id);
-                String jsonStr = resTask.Result;
-
-                facility = JsonConvert.DeserializeObject<Facility>(jsonStr);
-            }
-
-            return facility;
+            return JsonConvert.DeserializeObject<Facility>(resTask.Result);
         }
         private bool DeleteFacility(int id)
         {
-            bool output = true;
+            Task<HttpResponseMessage> deleteAsync = client.DeleteAsync(URI + "/" + id);
 
-            using (HttpClient client = new HttpClient())
+            HttpResponseMessage resp = deleteAsync.Result;
+            if (resp.IsSuccessStatusCode)
             {
-                Task<HttpResponseMessage> deleteAsync = client.DeleteAsync(URI + "/" + id);
-
-                HttpResponseMessage resp = deleteAsync.Result;
-                //if (!resp.IsSuccessStatusCode) output = false;
-                if (resp.IsSuccessStatusCode)
-                {
-                    String jsonStr = resp.Content.ReadAsStringAsync().Result;
-                    output = JsonConvert.DeserializeObject<bool>(jsonStr);
-                }
-                else
-                {
-                    output = false;
-                }
-
+                String jsonStr = resp.Content.ReadAsStringAsync().Result;
+                return JsonConvert.DeserializeObject<bool>(jsonStr);
             }
-
-            return output;
+                return false;
         }
 
         private bool CreateFacility(Facility facility)
         {
-            bool output = true;
+            String jsonStr = JsonConvert.SerializeObject(facility);
+            StringContent content = new StringContent(jsonStr, Encoding.ASCII, "application/json");
 
-            using (HttpClient client = new HttpClient())
+            Task<HttpResponseMessage> postAsync = client.PostAsync(URI, content);
+
+            HttpResponseMessage resp = postAsync.Result;
+            if (resp.IsSuccessStatusCode)
             {
-                String jsonStr = JsonConvert.SerializeObject(facility);
-                StringContent content = new StringContent(jsonStr, Encoding.ASCII, "application/json");
-
-                Task<HttpResponseMessage> postAsync = client.PostAsync(URI, content);
-
-                HttpResponseMessage resp = postAsync.Result;
-                if (resp.IsSuccessStatusCode)
-                {
-                    String jsonResStr = resp.Content.ReadAsStringAsync().Result;
-                    output = JsonConvert.DeserializeObject<bool>(jsonResStr);
-                }
-                else
-                {
-                    output = false;
-                }
+                String jsonResStr = resp.Content.ReadAsStringAsync().Result;
+                return JsonConvert.DeserializeObject<bool>(jsonResStr);
             }
-
-            return output;
+            return false;
         }
 
         private bool UpdateFacility(int id, Facility facility)
         {
-            bool output = true;
+            String jsonStr = JsonConvert.SerializeObject(facility);
+            StringContent content = new StringContent(jsonStr, Encoding.UTF8, "application/json");
 
-            using (HttpClient client = new HttpClient())
+            Task<HttpResponseMessage> putAsync = client.PutAsync(URI + "/" + id, content);
+
+            HttpResponseMessage resp = putAsync.Result;
+            if (resp.IsSuccessStatusCode)
             {
-                String jsonStr = JsonConvert.SerializeObject(facility);
-                StringContent content = new StringContent(jsonStr, Encoding.UTF8, "application/json");
-
-                Task<HttpResponseMessage> putAsync = client.PutAsync(URI + "/" + id, content);
-
-                HttpResponseMessage resp = putAsync.Result;
-                if (resp.IsSuccessStatusCode)
-                {
-                    String jsonResStr = resp.Content.ReadAsStringAsync().Result;
-                    output = JsonConvert.DeserializeObject<bool>(jsonResStr);
-                }
-                else
-                {
-                    output = false;
-                }
+                String jsonResStr = resp.Content.ReadAsStringAsync().Result;
+                return JsonConvert.DeserializeObject<bool>(jsonResStr);
             }
-
-            return output;
+            return false;
         }
     }
 }
