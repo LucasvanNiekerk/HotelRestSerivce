@@ -9,3 +9,4 @@ namespace HotelModel
         public string Address { get; set; }
     }
 }
+
