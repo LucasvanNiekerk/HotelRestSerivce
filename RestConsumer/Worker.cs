@@ -14,7 +14,7 @@ namespace RestConsumer
 
         public void Start()
         {
-            DeleteFacility(7); //Bare hvis den eksistere så den ikke brokker sig...
+            DeleteFacility(7); //Bare hvis den eksistere, så den ikke brokker sig...
 
             //Get all facilties
             List<Facility> facilities = GetAllFacilities();
