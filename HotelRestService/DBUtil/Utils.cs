@@ -4,7 +4,8 @@ namespace HotelRestService.DBUtil
 {
     public class Utils
     {
-        private const string ConnectionString = "Data Source=luca1921server.database.windows.net;Initial Catalog=Luca1921;User ID=luca1921;Password=password1921!;Connect Timeout=60;Encrypt=True;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+        //ToDo insert Connectionstring here:
+        private const string ConnectionString = "";
         private static SqlConnection _sqlConnection;
         public static SqlConnection GetConnection()
         {
