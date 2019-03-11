@@ -8,8 +8,8 @@ namespace HotelRestService.DBUtil
         private const string ConnectionString = "";
         private static SqlConnection _sqlConnection;
         public static SqlConnection GetConnection()
-        {
-            return _sqlConnection ?? (_sqlConnection = new SqlConnection(ConnectionString));
+        { //If SqlConnection is null return new SqlConnection else return sqlConnection
+            return _sqlConnection == null ? new SqlConnection(ConnectionString) : _sqlConnection;
         }
     }
 }
