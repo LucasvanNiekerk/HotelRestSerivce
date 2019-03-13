@@ -1,2 +1,2 @@
 # HotelRestSerivce
-Oblikatorisk opgave
+Obligatorisk opgave
