@@ -5,7 +5,7 @@ using HotelModel;
 
 namespace HotelRestService.DBUtil
 {
-    public class ManageFacility : IManageFacility
+    public class ManageFacility
     {
         private SqlConnection connection = Utils.GetConnection();
 
@@ -24,10 +24,10 @@ namespace HotelRestService.DBUtil
                     Facility facility = new Facility();
                     facility.Hotel_No = reader.GetInt32(0);
                     facility.Bar = reader.GetString(1).First();
-                    facility.TableTennis = reader.GetString(2).First();
-                    facility.PoolTable = reader.GetString(3).First();
+                    facility.Table_Tennis = reader.GetString(2).First();
+                    facility.Pool_Table = reader.GetString(3).First();
                     facility.Restaurant = reader.GetString(4).First();
-                    facility.SwimmingPool = reader.GetString(5).First();
+                    facility.Swimming_Pool = reader.GetString(5).First();
                     facilityList.Add(facility);
                 }
             }
@@ -53,10 +53,10 @@ namespace HotelRestService.DBUtil
                 {
                     facility.Hotel_No = reader.GetInt32(0);
                     facility.Bar = reader.GetString(1).First();
-                    facility.TableTennis = reader.GetString(2).First();
-                    facility.PoolTable = reader.GetString(3).First();
+                    facility.Table_Tennis = reader.GetString(2).First();
+                    facility.Pool_Table = reader.GetString(3).First();
                     facility.Restaurant = reader.GetString(4).First();
-                    facility.SwimmingPool = reader.GetString(5).First();
+                    facility.Swimming_Pool = reader.GetString(5).First();
                 }
             }
             finally
@@ -69,7 +69,7 @@ namespace HotelRestService.DBUtil
 
         public bool CreateFacility(Facility facility)
         {
-            string queryString = string.Format("INSERT INTO Facility (Hotel_No, Swimming_Pool, Bar, Table_Tennis, Pool_Table, Restaurant) VALUES ({0}, '{1}', '{2}', '{3}', '{4}', '{5}');", facility.Hotel_No, facility.SwimmingPool, facility.Bar, facility.TableTennis, facility.PoolTable, facility.Restaurant);
+            string queryString = string.Format("INSERT INTO Facility (Hotel_No, Swimming_Pool, Bar, Table_Tennis, Pool_Table, Restaurant) VALUES ({0}, '{1}', '{2}', '{3}', '{4}', '{5}');", facility.Hotel_No, facility.Swimming_Pool, facility.Bar, facility.Table_Tennis, facility.Pool_Table, facility.Restaurant);
 
             SqlCommand command = new SqlCommand(queryString, connection);
             connection.Open();
@@ -89,7 +89,7 @@ namespace HotelRestService.DBUtil
 
         public bool UpdateFacility(Facility facility, int hotel_No)
         {
-            string queryString = string.Format("UPDATE Facility SET Hotel_No = {0}, Swimming_Pool = '{1}', Bar = '{2}', Table_Tennis = '{3}', Pool_Table = '{4}', Restaurant = '{5}'  WHERE Hotel_No = {6}", facility.Hotel_No, facility.SwimmingPool, facility.Bar, facility.TableTennis, facility.PoolTable, facility.Restaurant, hotel_No);
+            string queryString = string.Format("UPDATE Facility SET Hotel_No = {0}, Swimming_Pool = '{1}', Bar = '{2}', Table_Tennis = '{3}', Pool_Table = '{4}', Restaurant = '{5}'  WHERE Hotel_No = {6}", facility.Hotel_No, facility.Swimming_Pool, facility.Bar, facility.Table_Tennis, facility.Pool_Table, facility.Restaurant, hotel_No);
 
             SqlCommand command = new SqlCommand(queryString, connection);
             connection.Open();

@@ -167,13 +167,9 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\HotelController.cs" />
     <Compile Include="Controllers\RoomController.cs" />
-    <Compile Include="DBUtil\IManageBooking.cs" />
-    <Compile Include="DBUtil\IManageFacility.cs" />
-    <Compile Include="DBUtil\IManageGuest.cs" />
-    <Compile Include="DBUtil\IManageHotel.cs" />
-    <Compile Include="DBUtil\IManageRoom.cs" />
     <Compile Include="DBUtil\ManageBooking.cs" />
     <Compile Include="DBUtil\ManageFacility.cs" />
+    <Compile Include="DBUtil\ManageFacilityTest.cs" />
     <Compile Include="DBUtil\ManageGuest.cs" />
     <Compile Include="DBUtil\ManageHotel.cs" />
     <Compile Include="DBUtil\ManageRoom.cs" />

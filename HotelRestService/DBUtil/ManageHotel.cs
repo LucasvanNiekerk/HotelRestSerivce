@@ -4,7 +4,7 @@ using HotelModel;
 
 namespace HotelRestService.DBUtil
 {
-    public class ManageHotel : IManageHotel
+    public class ManageHotel
     {
         private SqlConnection connection = Utils.GetConnection();
 

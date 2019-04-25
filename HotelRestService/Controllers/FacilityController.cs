@@ -7,28 +7,28 @@ namespace HotelRestService.Controllers
 {
     public class FacilityController : ApiController
     {
-        ManageFacility _mngFacility = new ManageFacility();
+        ManageFacilityTest _mngFacility = new ManageFacilityTest();
 
         public IEnumerable<Facility> Get()
         {
-            return _mngFacility.GetAllFacilities();
+            return _mngFacility.GetAllOfType(new Facility(), "Facility");
         }
 
         public Facility Get(int id)
         {
-            return _mngFacility.GetFacilityFromId(id);
+            return _mngFacility.GetOneFromId(new Facility(), "Facility", id);
         }
         public bool Post([FromBody]Facility value)
         {
-            return _mngFacility.CreateFacility(value);
+            return _mngFacility.Create(value, "Facility");
         }
         public bool Put(int id, [FromBody]Facility value)
         {
-            return _mngFacility.UpdateFacility(value, id);
+            return _mngFacility.Update(value, "Facility", "Hotel_No", id);
         }
         public bool Delete(int id)
         {
-            return _mngFacility.DeleteFacility(id);
+            return _mngFacility.Delete("Facility", "Hotel_No", id);
         }
     }
 }
